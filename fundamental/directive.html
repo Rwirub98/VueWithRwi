@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <span v-html="getMessage()"></span>
+      <p v-once>number1 is :{{number}}</p>
+      <p>number2 is :{{number}}</p>
+      <p>{{getRandomNumber()}}</p>
+      <a v-bind:href="myUrl">myblog</a>
+      <p v-show="employee.hascard">
+        spending limit is : {{employee.spendinglimit}}
+      </p>
+      <p v-if="employee.hascard">
+        spending limit is : {{employee.spendinglimit}}
+      </p>
+      <p v-else-if="employee.salary<1000">eligible for hascard</p>
+      <p v-else>employes doesnt have hascard</p>
+      lucky numbers:<br />
+      <span v-for="(lucky,index) in luckyNum"><br/>
+        <span v-once>{{lucky}}</span><br /> </span>
+      
+      <hr>
+      <p><u>my projects:</u>                              </p>
+      <ul>
+        <li v-for="(proj,index) in employee.projects" :key="proj.project">{{index+1}} - {{proj.project}}-{{proj.timeline}}
+<input type="text"/>
+        </li>
+      </ul>
+      {{shuffleEmployeeProjectOrder()}}
+    </div>
+  </body>
+  <script>
+    const { createApp, ref, reactive } = Vue;
+
+    createApp({
+      setup() {
+        const message = "hello miss!!";
+        const number = ref(10);
+        const myUrl = "https://www.google.co.in/";
+        const employee = reactive({
+          name: "rwi",
+          salary: 300000,
+          hascard: false,
+          spendinglimit: 30000,
+          projects: [
+            { project: "green A", timeline: "2years" },
+            { project: "green b", timeline: "4years" },
+            { project: "green c", timeline: "3years" },
+            { project: "green d", timeline: "5years" },
+          ],
+        });
+        luckyNum = [23, 22, 54, 23];
+
+        function getMessage() {
+          return `<h1><u>${message}</u></h1>`;
+        }
+        function getRandomNumber() {
+          setTimeout(() => {
+            number.value = 99;
+          }, 2000);
+        }
+        function shuffleEmployeeProjectOrder(){
+          setTimeout(()=>{
+            employee.projects.sort(()=>Math.random()-0.5);
+          },2000);
+        }
+        return {
+          message,
+          getMessage,
+          getRandomNumber,
+          number,
+          myUrl,
+          employee,
+          luckyNum,
+          shuffleEmployeeProjectOrder
+        };
+      },
+    }).mount("#app");
+  </script>
+</html>

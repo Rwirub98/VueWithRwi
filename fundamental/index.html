@@ -4,48 +4,57 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </head>
   <body>
-    <div id ="app">
+    <div id="app">
       <h1>{{message}}</h1>
-      <h2> number is {{number%2==0? "even number" : "odd number"}}</h2>
-      <p> names are : {{names[1]}}</p>
-      <p> student name is {{students.name}} and age is {{students.age}} from section {{students.sec}}</p>
+      <h2>number is {{number%2==0? "even number" : "odd number"}}</h2>
+      <p>names are : {{names[1]}}</p>
+      <p>
+        student name is {{students.name}} and age is {{students.age}} from
+        section {{students.sec}}
+      </p>
       <p>Random number is {{getRandomNumber()}}</p>
       <p>{{getMessage()}}</p>
+      <p>{{updateMessage()}}</p>
     </div>
   </body>
-<script> 
+  <script>
+    const { createApp, ref, reactive } = Vue;
 
-  const { createApp }= Vue;
+    createApp({
+      setup() {
+        const message = ref("hellow mrs rub");
+        const number = 10;
+        const names = ["r", "w", "i", "r", "u", "b"];
+        const students = reactive({
+          name: "rwi",
+          age: 21,
+          sec: "b",
+        });
 
-  createApp({
-    setup(){
-      
-      const message = "hellow mrs rub";
-      const number = 10;
-      const names = ['r','w','i','r','u','b'];
-      const students={
-        name: 'rwi',
-        age:21,
-        sec:'b',
-      };
-
-      function getRandomNumber(){
-        return Math.floor(Math.random()*10)+1;
-      }
-
-      function getMessage(){
-         
-        return message.toUpperCase();
-      }
-      return{
-       // :message"hello mrs rwi",
-       number,
-       names,
-       students,
-       getRandomNumber,
-       getMessage
-      };
-    },
-  }).mount('#app');
-</script>
+        function getRandomNumber() {
+          students.name = "rimi";
+          return Math.floor(Math.random() * 10) + 1;
+        }
+        //ref attribute, we use to access direclty the dom element which vue declarativ rendering model ignores or abstrats away direct dom operation
+        function getMessage() {
+          return message.value.toUpperCase();
+        }
+        //timeout in function
+        function updateMessage() {
+          setTimeout(() => {
+            message.value = "hello world!";
+          }, 2000);
+        }
+        return {
+          // :message"hello mrs rwi",
+          number,
+          names,
+          students,
+          getRandomNumber,
+          getMessage,
+          updateMessage,
+        };
+      },
+    }).mount("#app");
+  </script>
 </html>
